@@ -1,10 +1,16 @@
-# 学堂云本地视频播放助手
+# 学堂云/雨课堂刷网课助手
 
 **由‘霁月狐’进行开发** · Windows 桌面应用 · Python / PySide6 / Playwright
 
+## 适用学校与兼容性说明（请先阅读）
+
+> **本项目专为“滇池学院”的学堂云/雨课堂网课环境开发与适配，目前仅验证 `dcc.yuketang.cn`。其他学校的平台域名、版本或播放器配置可能不同，因此不保证能够使用。**
+>
+> **如果无法使用，请联系 QQ：1658399029。** 联系时请说明学校、平台网址、软件版本及具体问题，便于排查。
+
 手动登录学堂云后，勾选多门课程，助手按课程目录依次播放未完成的视频，自动静音、优先选择二倍速，并以平台显示的完成度决定何时切换下一条。提供白色天蓝界面、视频队列、运行日志和离线使用教程。
 
-目前仅适配 **https://dcc.yuketang.cn**，浏览器使用独立本地登录配置。
+目前仅适配 **https://dcc.yuketang.cn**，浏览器使用独立本地登录配置。仓库地址保留英文名称 `xuetang-video-assistant`，项目展示名称为“学堂云/雨课堂刷网课助手”。
 
 **[下载最新 Windows 版本](https://github.com/zicijieshuo/xuetang-video-assistant/releases/latest)** · **[详细使用教程](docs/使用教程.md)** · **[提交问题](https://github.com/zicijieshuo/xuetang-video-assistant/issues)**
 
