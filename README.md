@@ -10,9 +10,9 @@
 
 手动登录学堂云后，勾选多门课程，助手按课程目录依次播放未完成的视频，自动静音、优先选择二倍速，并以平台显示的完成度决定何时切换下一条。提供白色天蓝界面、视频队列、运行日志和离线使用教程。
 
-目前仅适配 **https://dcc.yuketang.cn**，浏览器使用独立本地登录配置。仓库地址保留英文名称 `xuetang-video-assistant`，项目展示名称为“学堂云/雨课堂刷网课助手”。
+目前仅适配 **https://dcc.yuketang.cn**，浏览器使用独立本地登录配置。仓库地址保留英文名称 `xuetang-yuketang-course-assistant`，项目展示名称为“学堂云/雨课堂刷网课助手”。
 
-**[下载最新 Windows 版本](https://github.com/zicijieshuo/xuetang-video-assistant/releases/latest)** · **[详细使用教程](docs/使用教程.md)** · **[提交问题](https://github.com/zicijieshuo/xuetang-video-assistant/issues)**
+**[下载最新 Windows 版本](https://github.com/zicijieshuo/xuetang-yuketang-course-assistant/releases/latest)** · **[详细使用教程](docs/使用教程.md)** · **[提交问题](https://github.com/zicijieshuo/xuetang-yuketang-course-assistant/issues)**
 
 ## 界面预览
 
@@ -38,7 +38,7 @@
 
 ## 下载与运行
 
-1. 在 [Releases](https://github.com/zicijieshuo/xuetang-video-assistant/releases/latest) 下载 `XuetangAssistant-v1.0.0-Windows-x64.zip`。
+1. 在 [Releases](https://github.com/zicijieshuo/xuetang-yuketang-course-assistant/releases/latest) 下载 `XuetangAssistant-v1.0.0-Windows-x64.zip`。
 2. 解压整个压缩包，双击 `XuetangAssistant/学堂云播放助手.exe`。**保留 `_internal` 文件夹，不能只复制 exe。**
 3. 默认使用已安装的 Edge，点击 **打开浏览器**。未安装 Edge 时可准备专用 Chromium，首次准备需要联网。
 4. 在专用浏览器中手动登录，完成验证码，进入学堂云“我听的课”。
@@ -64,8 +64,8 @@ Windows 发行包为 **64 位**。源码开发和打包已在 Python 3.11、Wind
 ## 源码运行与打包
 
 ```powershell
-git clone https://github.com/zicijieshuo/xuetang-video-assistant.git
-cd xuetang-video-assistant
+git clone https://github.com/zicijieshuo/xuetang-yuketang-course-assistant.git
+cd xuetang-yuketang-course-assistant
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m playwright install chromium
@@ -95,6 +95,6 @@ python -m venv .venv
 
 ## 反馈问题
 
-通过 [Issues](https://github.com/zicijieshuo/xuetang-video-assistant/issues) 提供版本号、浏览器类型、操作步骤及错误提示。截图请遮挡个人信息；不要提交密码、Cookie、令牌或浏览器配置目录。
+通过 [Issues](https://github.com/zicijieshuo/xuetang-yuketang-course-assistant/issues) 提供版本号、浏览器类型、操作步骤及错误提示。截图请遮挡个人信息；不要提交密码、Cookie、令牌或浏览器配置目录。
 
 开发者：**霁月狐**。项目目前未配置开源许可证；第三方依赖的许可随其发行文件提供。

@@ -14,3 +14,13 @@ research/
 profile-*/
 *.zip
 *.exe
+
+# Local agent instructions and temporary site investigation files
+AGENTS.md
+AGENT.md
+agents.md
+agent.md
+.codex/
+.agents/
+/tools/inspect_public_assets.py
+/docs/后台暂停检测检查.md
