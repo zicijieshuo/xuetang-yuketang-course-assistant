@@ -1,0 +1,9 @@
+[project]
+name = "xuetang-local-assistant"
+version = "1.0.0"
+description = "学堂云本地视频播放助手"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

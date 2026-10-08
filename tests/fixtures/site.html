@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>学堂云模拟页面</title>
+<style>
+body{font-family:sans-serif;margin:16px}.lesson-cardS{padding:15px;border:1px solid #aaa;margin:8px;cursor:pointer}
+.leaf-item{padding:7px;border-bottom:1px solid #ddd;display:flex;gap:8px;cursor:pointer}
+.leaf-item-left{display:flex;gap:8px}.leaf-item-status{width:20px}.leaf-item-title{min-width:130px}
+.nav-item-node-inner{padding:8px}.expand-icon{display:inline-block;width:24px;height:24px;cursor:pointer;background:#ccc}
+.learning-center-player{width:600px;height:240px}.xt_video_player_container{width:600px;height:240px;background:#ddd}
+video{width:550px;height:150px}.xt_video_player_speed{display:inline-block;position:relative}
+.xt_video_player_speed ul{display:none;position:absolute;bottom:0;background:white;margin:0;padding:5px;min-width:70px}
+.xt_video_player_speed:hover ul{display:block}.xt_video_player_speed li{cursor:pointer;padding:3px;list-style:none}
+button{padding:8px}.rate-detail{display:block;margin:8px}
+</style></head><body><main id="app"></main>
+<script>
+const app=document.querySelector('#app');
+const parts=location.pathname.split('/');
+const query=new URLSearchParams(location.search);
+const classroom=parts.includes('lms-graph')?parts[parts.indexOf('lms-graph')+1]:'101';
+const base=`/ai-workspace/lms-graph/${classroom}`;
+const title=classroom==='101'?'课程甲':'课程乙';
+const leaves=[
+ {id:1,type:'视频',title:'第一节',complete:false},
+ {id:2,type:'作业',title:'课后作业',complete:false},
+ {id:3,type:'视频',title:'已看过的视频',complete:true},
+ {id:4,type:'考试',title:'测验',complete:false},
+ {id:5,type:'视频',title:'第二节',complete:false},
+ {id:6,type:'视频',title:'未开放视频',locked:true},
+ {id:7,type:'音频',title:'听力',complete:false},
+ {id:8,type:'神秘',title:'未知节点',complete:false}
+];
+if(location.pathname==='/pro/courselist'){
+ app.innerHTML=[101,102].map((id,i)=>`<div class="lesson-cardS" onclick="location.href='/pro/lms/demo/${id}'"><h1>课程${i?'乙':'甲'}</h1><span class="className">班级${i+1}</span></div>`).join('');
+}else if(location.pathname.startsWith('/pro/lms/')){
+ if(location.pathname.endsWith('/studycontent')){
+ const id=parts[parts.length-2];
+ app.innerHTML='<div class="chapter-list"><div class="content">'+leaves.map(l=>`<div class="leaf-detail" onclick="window.open('/ai-workspace/lms-graph/${id}/${l.type==='视频'?'video':'exercise'}/${l.id}')"><div class="leaf-title"><i class="${l.type==='视频'?'icon--shipin':l.type==='作业'?'icon--zuoye':'icon--kaoshi'}"></i><span class="title">${l.title}</span>${l.locked?'<i class="icon--suo"></i>':''}</div><div class="progress-wrap"><div class="item">${l.complete?'已完成':'未开始'}</div></div></div>`).join('')+'</div></div>';
+ }else{
+ const id=parts[parts.length-1];app.innerHTML=`<iframe title="课程学习空间" src="/ai-workspace/lms-graph/${id}" style="width:950px;height:650px;border:0"></iframe>`;
+ }
+}else{
+ const videoId=parts.includes('video')?Number(parts[parts.indexOf('video')+1]):0;
+ const leafHtml=leaves.map(l=>`<div class="leaf-item" onclick="location.href='${base}/${l.type==='视频'?'video':'exercise'}/${l.id}${location.search}'"><div class="leaf-item-left"><span class="leaf-item-tag">${l.type}</span><span class="leaf-item-title">${l.title}</span></div><span class="leaf-item-status">${l.locked?'<i class="icon-suoding">锁</i>':l.complete?'<i class="icon-yuanquangou">已完成</i>':''}</span></div>`).join('');
+ const chapter=query.get('directory')==='chapter';
+ const expander=chapter?'<div class="nav-item-title" onclick="this.classList.add(\'is-expand\');document.querySelector(\'.nav-item-leaf-box\').hidden=false">第一章<i class="expand-icon icon iconfont"></i></div>':'<i class="expand-icon" onclick="this.classList.add(\'is-expanded\');document.querySelector(\'.nav-item-leaf-box\').hidden=false"></i><span>第一章</span>';
+ app.innerHTML=`<div class="${chapter?'learning-space-student-chapter-nav':'learning-space-student-knowledge-nav'}"><div class="nav-item"><div class="nav-item-node-inner">${expander}</div><div class="nav-item-leaf-box" hidden>${leafHtml}</div></div></div>`;
+ if(videoId){
+  const rates=query.get('rates')==='fallback'?[1,1.5]:[1,1.5,2];
+  app.innerHTML+=`<section class="learning-space-video"><span class="rate-detail"><span class="text">完成度：20%</span></span><div class="learning-center-player"><div class="xt_video_player_container"><video src="/fixtures/tone.wav" preload="auto"></video><br><button class="xt_video_player_play_btn">播放 / 暂停</button><span class="xt_video_player_volume"><button class="xt_video_player_common_icon">静音</button></span><span class="xt_video_player_speed"><span>倍速</span><ul>${rates.map(r=>`<li data-speed="${r}">${r}X</li>`).join('')}</ul></span></div></div></section>`;
+  const v=document.querySelector('video');
+  document.querySelector('.xt_video_player_play_btn').onclick=()=>v.paused?v.play():v.pause();
+  document.querySelector('.xt_video_player_common_icon').onclick=()=>{if(query.get('mute')!=='broken')v.volume=v.volume===0?1:0};
+  if(query.get('mute')==='desync'){
+   const icon=document.querySelector('.xt_video_player_common_icon');
+   icon.classList.add('xt_video_player_common_icon_muted');v.volume=0.8;
+   let last=Date.now();
+   icon.onclick=()=>{
+    const muted=!icon.classList.contains('xt_video_player_common_icon_muted');
+    icon.classList.toggle('xt_video_player_common_icon_muted',muted);
+    if(Date.now()-last>=100){last=Date.now();v.volume=muted?0:0.8}
+   };
+  }
+  document.querySelectorAll('[data-speed]').forEach(item=>item.onclick=()=>{if(!(query.get('rate2')==='broken'&&Number(item.dataset.speed)===2))v.playbackRate=Number(item.dataset.speed)});
+  if(query.get('mousegate')==='1')document.querySelectorAll('[data-speed]').forEach(item=>{
+   let x=0,y=0,moved=false;const original=item.onclick;
+   item.onmouseover=e=>{x=e.clientX;y=e.clientY;moved=false};
+   item.onmousemove=e=>{moved=Math.hypot(e.clientX-x,e.clientY-y)>0};
+   item.onclick=e=>{if(moved)original(e)};
+  });
+  if(query.get('resetonplay')==='1')v.addEventListener('play',()=>{v.playbackRate=1},{once:true});
+  v.onended=()=>{if(query.get('complete')!=='never')document.querySelector('.rate-detail .text').textContent='已完成'};
+ }
+}
+</script></body></html>

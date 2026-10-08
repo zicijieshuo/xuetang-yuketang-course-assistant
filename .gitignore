@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+.pytest_cache/
+build/
+dist/
+build-*/
+dist-*/
+release/
+research/
+*.pyc
+*.log
+.env
+.env.*
+profile-*/
+*.zip
+*.exe
